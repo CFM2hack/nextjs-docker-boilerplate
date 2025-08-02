@@ -30,7 +30,7 @@ This configuration was born from a difficult debugging process and is engineered
 
 ## 🚀 Quickstart: How to Use for a New Project
 
-Follow these steps to go from zero to a running application in minutes.
+Follow these steps to go from zero to a running application in minutes. This workflow is designed to avoid any file conflicts during setup.
 
 ### Step 1. Clone This Boilerplate
 Clone this repository into a new directory with your project's name. **Remember to use all lowercase letters and hyphens.**
@@ -40,8 +40,42 @@ git clone https://github.com/CFM2hack/nextjs-docker-boilerplate my-new-project-n
 cd my-new-project-name
 ```
 
-### Step 2: Customize `docker-compose.yml`
-This is an optional but highly recommended step for keeping your projects organized. Open `docker-compose.yml` and change the default `container_name` fields to match your new project name.
+### Step2: Create the Next.js Project
+Run the create-next-app installer in the current directory (.). This will populate the folder with the Next.js starter code. It will succeed because the initial .gitignore file does not ignore the Docker configuration.
+```bash
+npx create-next-app@latest . --typescript --eslint
+```
+(Answer "Yes" to Tailwind CSS and Turbopack when prompted.)
+
+### Step 3: Finalize Git Configuration and Convert to PNPM
+This crucial step prepares your project for development by swapping the `.gitignore` file, converting to the correct package manager, and creating your initial commit.
+
+```bash
+# First, replace the temporary boilerplate .gitignore with the final one
+# This tells Git to ignore Docker files in YOUR application repository.
+mv .gitignore.final .gitignore
+
+# Next, remove the node_modules and package-lock.json created by the npm-based installer.
+rm -rf node_modules package-lock.json
+
+# Now, install all dependencies fresh using pnpm.
+# This creates a pnpm-lock.yaml file and ensures your project is consistent with our Docker setup.
+pnpm install
+
+# Finally, create the very first commit for your new application's history.
+# This stages all the new Next.js files and our configuration changes.
+git add .
+git commit -m "feat: Initial commit with Next.js and project setup
+```
+
+### Setp 4: Step 4: Make Entrypoint Executable
+You only need to do this once per project clone. This gives the startup script permission to run.
+```bash
+chmod +x entrypoint.sh
+```
+
+### Step 5: Customize `docker-compose.yml` (Optional)
+This is a highly recommended step for keeping your projects organized. Open docker-compose.yml and change the default container_name fields to match your new project name.
 
 *From:*
 ```yaml
@@ -55,38 +89,16 @@ container_name: my-new-project-name_app
 container_name: my-new-project-name_db
 ```
 
-### Step 3: Create the Next.js Project
-Run the `create-next-app` installer in the current directory (`.`). This will populate the folder with the Next.js starter code.
-
-```bash
-npx create-next-app@latest . --typescript --eslint
-```
-(Answer "Yes" to Tailwind CSS and Turbopack when prompted.)
-
-### Step 4: Convert to PNPM
-The installer uses `npm` by default. We need to convert the project to use `pnpm` to match our Docker setup.
-
-```bash
-# Remove npm artifacts
-rm -rf node_modules package-lock.json
-# Install dependencies with pnpm
-pnpm install
-```
-
-### Step 5: Make Entrypoint Executable
-You only need to do this once per project clone. This gives the startup script permission to run.
-
-```bash
-chmod +x entrypoint.sh
-```
-
 ### Step 6: Build and Run!
 Bring your entire development environment online with a single command.
 
 ```bash
 docker-compose up --build
 ```
-The first build will take a minute to install dependencies inside the container's volume. Subsequent builds will be much faster. Your application will be running at http://localhost:3000.
+The first build will take a minute to install dependencies inside the container's volume. Subsequent builds will be much faster.
+Your application will be running at http://localhost:3000.
+
+
 
 ## 💡 Daily Development Workflow
 
