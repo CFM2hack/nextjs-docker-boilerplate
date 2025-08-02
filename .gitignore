@@ -1,45 +1,32 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# This is the .gitignore for the BOILERPLATE setup.
+# It intentionally tracks Dockerfile and docker-compose.yml.
 
-# dependencies
+# Dependencies
 /node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+/.pnpm-store
 
-# testing
-/coverage
-
-# next.js
+# Build artifacts
 /.next/
 /out/
 
-# production
-/build
+# Local Environment
+.env.local
+.env
+```Notice it's missing the Docker section.
 
-# misc
-.DS_Store
-*.pem
+**Step 3: Update the `README.md` Instructions**
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+This is the most important part. We will update the `README.md` to include a new step in the workflow that swaps the gitignore files.
 
-# env files (can opt-in for committing if needed)
-.env*
+Find the **Quickstart** section in your `README.md` and modify it to look like this:
 
-# vercel
-.vercel
+```markdown
+## 🚀 Quickstart: How to Use for a New Project
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+### Step 1: Clone This Boilerplate
+... (this part is the same)
 
-# Docker
-.dockerignore
-
+### Step 2: Create the Next.js Project
+Run the `create-next-app` installer. Because our initial `.gitignore` tracks the Docker files, this will work without conflict.
+```bash
+npx create-next-app@latest . --typescript --eslint
