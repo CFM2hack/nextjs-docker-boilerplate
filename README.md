@@ -36,7 +36,7 @@ Follow these steps to go from zero to a running application in minutes.
 Clone this repository into a new directory with your project's name. **Remember to use all lowercase letters and hyphens.**
 
 ```bash
-git clone [URL_TO_YOUR_BOILERPLATE_REPO] my-new-project-name
+git clone https://github.com/CFM2hack/nextjs-docker-boilerplate my-new-project-name
 cd my-new-project-name
 ```
 
