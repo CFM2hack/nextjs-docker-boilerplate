@@ -13,5 +13,10 @@ done
 echo "Dependencies installing inside the container..."
 pnpm install
 
+# NEW, CRUCIAL STEP: Generate the Prisma client.
+# This ensures the .prisma/client code exists before the app starts.
+echo "Generating Prisma client..."
+pnpm prisma generate
+
 # Now that dependencies are correct, execute the main command (pnpm dev)
 exec "$@"
